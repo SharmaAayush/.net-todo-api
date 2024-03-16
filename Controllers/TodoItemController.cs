@@ -31,7 +31,7 @@ namespace TodoApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            TodoItem? todoItem = await _context.TodoItems.FindAsync(id);
 
             if (todoItem == null)
             {
@@ -80,14 +80,14 @@ namespace TodoApi.Controllers
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.id }, todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.id }, todoItem);
         }
 
         // DELETE: api/TodoItem/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            TodoItem? todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
                 return NotFound();
